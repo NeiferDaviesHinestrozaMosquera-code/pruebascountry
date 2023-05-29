@@ -8,8 +8,9 @@ class CountryInitial extends CountryState {}
 class CountryLoading extends CountryState {}
 
 class CountryLoaded extends CountryState {
-  final CountryModel countryModel;
-   CountryLoaded(this.countryModel);
+  final List<CountryModel>? countrylist ;
+
+  CountryLoaded(this.countrylist); 
 }
 
 class CountryError extends CountryState {

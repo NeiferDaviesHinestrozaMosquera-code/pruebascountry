@@ -1,15 +1,45 @@
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:pruebacountry/model/country_model.dart';
 
 class ApiCountryProvider {
-  final Dio _dio = Dio ();
-  final String _url = "https://ensemble-api.open-meteo.com/v1/ensemble?latitude=52.52&longitude=13.41&models=icon_seamless&hourly=temperature_2m";
-
- Future <CountryModel> fetchCountryList () async {
+  final Dio _dio = Dio();
+  final String _url = 'https://restcountries.com/v3.1/all';
   
-    Response response = await _dio.get(_url);
-    return CountryModel.fromJson(response.data);
- 
- } 
+  
+
+  Future<List<CountryModel>?> fetchCountryList() async {
+
+    try {
+      final response = await _dio.get(_url);
+     
+
+      final countriesnews = <CountryModel>[];
+
+      final responseData = response.data;
+
+
+      // Recorres el arreglo
+      for (var miCountry in responseData) {       
+
+        // asignar el valor actual
+        final countrydata = miCountry;
+
+        // conviertes la data
+        final country = CountryModel.fromMap(countrydata);
+
+        // agregar al array
+        countriesnews.add(country);
+
+        //
+      }
+
+      return countriesnews;
+      //
+    } catch (e) {
+     Text(" Error en la peticion : $e");
+    }
+    return null;
+  }
 }
